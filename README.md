@@ -1,75 +1,42 @@
-# Image Recognition Project
+# Image Recognition App
 
-This project demonstrates image recognition using a pre-trained deep learning model (Keras/TensorFlow) on the CIFAR-10 dataset. It allows you to recognize objects in images either from local files or URLs.
+This is a Flask web application for image recognition using a pre-trained Keras model on the CIFAR-10 dataset. It allows users to classify objects in images by entering an image URL.
 
-## Prerequisites
+## Features
 
-Before running this project, ensure you have the following installed:
-
-- Python 3.x
-- TensorFlow 2.x
-- Keras
-- NumPy
-- Pillow (PIL)
-- Matplotlib
-
-You can install the required Python libraries using pip:
-
-```bash
-pip install tensorflow keras numpy pillow matplotlib
-```
+- **Classification**: Upload an image URL to classify objects into categories such as Airplane, Automobile, Bird, Cat, Deer, Dog, Frog, Horse, Ship, and Truck.
+- **Display**: Show both the resized (32x32) and original images alongside the classification result.
+- **Responsive**: Designed with a responsive layout for usability on different devices.
 
 ## Installation
 
 1. Clone the repository:
+   ```bash
+   git clone https://github.com/ape-with-helmet/Image-recognition-CIFAR10-dataset.git
+   cd Image-recognition-CIFAR10-dataset
+   ```
 
-```bash
-git clone https://github.com/your_username/image_recognition_project.git
-cd image_recognition_project
-```
+2. Install dependencies using pip:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-2. Download the pre-trained model (`my_model.keras`) and place it in the `models/` directory.
-
-3. Optionally, create a virtual environment and activate it:
-
-```bash
-python -m venv env
-source env/bin/activate  # On Windows, use `env\Scripts\activate`
-```
-
-4. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
+3. Run the Flask application:
+   ```bash
+   python app.py
+   ```
+   The application will run locally at `http://localhost:5000`.
 
 ## Usage
 
-### Recognize an Image from URL
+- Open your web browser and navigate to `http://localhost:5000`.
+- Enter the URL of an image you want to classify.
+- Click the "Classify" button to see the classification result and images.
 
-```bash
-python image_recognition.py --url <image_url>
-```
+## About
 
-Replace `<image_url>` with the URL of the image you want to recognize.
-
-### Recognize Images from Local Files (CIFAR-10 Test Images)
-
-To recognize images from the CIFAR-10 dataset:
-
-```bash
-python image_recognition.py
-```
-
-This will predict classes for a few test images from the CIFAR-10 dataset stored locally.
-
-## Notes
-
-- The project uses a basic Convolutional Neural Network (CNN) model trained on the CIFAR-10 dataset.
-- Ensure that images are in RGB format for correct processing.
-- If using URLs, ensure the images are accessible and valid.
+This project uses a TensorFlow/Keras model trained on the CIFAR-10 dataset for image classification. It preprocesses images by resizing them to 32x32 pixels before classification. The Flask framework is used to create a web interface where users can interact with the model by providing image URLs.
 
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-```
