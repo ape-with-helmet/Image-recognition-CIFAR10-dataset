@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Recognition App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        p {
+            font-size: 18px;
+            text-align: center;
+        }
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #imgUrlInput {
+            width: 60%;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #imageContainer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #selectedImage {
+            max-width: 100%;
+            height: auto;
+            display: none; /* Initially hidden */
+        }
+        #loading {
+            display: none; /* Initially hidden */
+            text-align: center;
+            margin-top: 20px;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #4CAF50;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .result-container {
+            margin-top: 20px;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .result-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+        }
+        .result-container h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .result-container p {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Recognition App</h1>
+        <p>Upload an image URL to classify objects</p>
+
+        <form id="imageForm" onsubmit="submitForm(event)">
+            <input type="text" id="imgUrlInput" name="imgUrl" placeholder="Enter image URL" required>
+            <button type="submit">Classify</button>
+        </form>
+
+        <div id="imageContainer">
+            <img id="selectedImage" src="" alt="Selected Image">
+        </div>
+
+        <div id="loading">
+            <div class="loading-spinner"></div>
+            <p id="loadingText">Fetching your image...</p>
+        </div>
+
+        <div id="result">
+            <!-- Result will be updated dynamically by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get the image URL from the input field
+            const imgUrl = document.getElementById('imgUrlInput').value.trim();
+
+            // Show loading spinner and change loading text
+            const loadingContainer = document.getElementById('loading');
+            loadingContainer.style.display = 'block';
+            document.getElementById('loadingText').textContent = 'Fetching your image...';
+
+            // Fetch or send an AJAX request to your Flask backend
+            fetch('/classify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ imgUrl: imgUrl })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the result section with the classification result and resized image
+                const resultContainer = document.getElementById('result');
+                resultContainer.innerHTML = `
+                    <div class="result-container">
+                        <h2>Recognition Result:</h2>
+                        <img src="${imgUrl}" alt="Recognized Image">
+                        <p>${data.result}</p>
+                    </div>`;
+
+                // Hide loading spinner and reset loading text
+                loadingContainer.style.display = 'none';
+                document.getElementById('loadingText').textContent = 'Fetching your image...';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Hide loading spinner on error
+                loadingContainer.style.display = 'none';
+                document.getElementById('loadingText').textContent = 'Fetching your image...';
+            });
+        }
+    </script>
+</body>
+</html>
