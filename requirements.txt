@@ -2,3 +2,6 @@ tensorflow==2.16.1
 numpy
 opencv-python
 werkzeug>=1.0.1
+Flask
+Pillow
+requests
