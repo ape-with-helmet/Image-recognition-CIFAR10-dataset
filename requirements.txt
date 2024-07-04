@@ -5,3 +5,4 @@ werkzeug>=1.0.1
 Flask
 Pillow
 requests
+validators
