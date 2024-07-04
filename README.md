@@ -16,7 +16,7 @@ This is a Flask web application for image recognition using a pre-trained Keras 
    cd Image-recognition-CIFAR10-dataset
    ```
 
-2. Install dependencies using pip:
+2. Install dependencies using pip (recommended to run on a virtual environment):
    ```bash
    pip install -r requirements.txt
    ```
